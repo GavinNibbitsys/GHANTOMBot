@@ -95,7 +95,7 @@ public class Program
 
 
 
-        Slow("Ok so now i have implanted my self into your computer and i will watch everything you do.", ConsoleColor.Red, 20);
+        Slow("Ok, so now i have implanted myself into your computer and I will watch everything you do.", ConsoleColor.Red, 20);
         System.Threading.Thread.Sleep(500);
         Console.WriteLine();
         Slow("I will popup on every startup and monitor your activities and comment on them.", ConsoleColor.Red, 20);
