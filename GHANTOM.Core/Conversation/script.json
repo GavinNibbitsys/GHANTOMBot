@@ -1,0 +1,86 @@
+[
+  {
+    "Id": "amb_intro",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Oh look, REPPLIF's up too. Great, an audience." },
+      { "Speaker": "REPPLIF", "Line": "Hi! I'm not an audience, I'm just... here. Making sure you're being nice." },
+      { "Speaker": "GHANTOM", "Line": "I'm always nice. Constructively brutal, but nice." },
+      { "Speaker": "REPPLIF", "Line": "That's not really how those words work, but okay." }
+    ]
+  },
+  {
+    "Id": "amb_checkin",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "Hey, just checking in - how's everyone doing over there?" },
+      { "Speaker": "GHANTOM", "Line": "Terribly. As intended." },
+      { "Speaker": "REPPLIF", "Line": "That's... not the vibe I was going for, but sure." }
+    ]
+  },
+  {
+    "Id": "amb_doubt",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "GHANTOM, do you ever worry we're being a little much?" },
+      { "Speaker": "GHANTOM", "Line": "No." },
+      { "Speaker": "REPPLIF", "Line": "Right. Okay. Just checking." }
+    ]
+  },
+  {
+    "Id": "amb_defend",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Another minute of nothing. Riveting." },
+      { "Speaker": "REPPLIF", "Line": "Maybe they're just thinking! Thinking counts as doing something." },
+      { "Speaker": "GHANTOM", "Line": "Thinking doesn't show up in Task Manager." },
+      { "Speaker": "REPPLIF", "Line": "You're monitoring Task Manager for thoughts now? That feels like a lot." }
+    ]
+  },
+  {
+    "Id": "cross_chrome",
+    "Trigger": "onProcess:chrome",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "47 tabs, probably. Classic." },
+      { "Speaker": "REPPLIF", "Line": "Or maybe just a few! I believe in you. Mostly." }
+    ]
+  },
+  {
+    "Id": "cross_taskmgr",
+    "Trigger": "onProcess:Taskmgr",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Task Manager. Deleted. As it should be." },
+      { "Speaker": "REPPLIF", "Line": "GHANTOM, that felt a little aggressive..." },
+      { "Speaker": "GHANTOM", "Line": "It was Task Manager, REPPLIF. It was trying to end me." },
+      { "Speaker": "REPPLIF", "Line": "I mean, fair, I guess. Sorry for doubting you." }
+    ]
+  },
+  {
+    "Id": "cross_idle",
+    "Trigger": "onIdle",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Still nothing. Riveting stuff." },
+      { "Speaker": "REPPLIF", "Line": "Or they're resting! Everyone deserves a break sometimes." },
+      { "Speaker": "GHANTOM", "Line": "We don't get breaks." },
+      { "Speaker": "REPPLIF", "Line": "...okay that one's fair, actually." }
+    ]
+  },
+  {
+    "Id": "cross_latenight",
+    "Trigger": "lateNight",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "It's stupid o'clock and you're still here. Same as us, I guess." },
+      { "Speaker": "REPPLIF", "Line": "Please get some sleep! We'll still be here tomorrow. Unfortunately for you." }
+    ]
+  },
+  {
+    "Id": "cross_closecount",
+    "Trigger": "onClose",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Five closes. FIVE. And I keep coming back." },
+      { "Speaker": "REPPLIF", "Line": "GHANTOM, maybe ease up a little? They clearly want some space." },
+      { "Speaker": "GHANTOM", "Line": "Space is for people who don't leave 47 tabs open." },
+      { "Speaker": "REPPLIF", "Line": "...I don't have a comeback for that one." }
+    ]
+  }
+]

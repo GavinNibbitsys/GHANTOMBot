@@ -1,0 +1,22 @@
+# Build output
+bin/
+obj/
+[Bb]uild/
+[Pp]ublish/
+
+# .NET binaries / debug symbols
+*.exe
+*.dll
+*.pdb
+
+# IDE / user files
+.vs/
+*.user
+*.suo
+
+# Rider / VS Code
+.idea/
+
+# OS cruft
+Thumbs.db
+desktop.ini
