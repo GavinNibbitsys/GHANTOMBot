@@ -23,28 +23,21 @@ internal static class Program
         }
 
         bool trollMode = args.Contains("--troll");
-        int closeCount = ParseCloseCount(args);
+        var save = SaveFile.Load(AppName);
+        int closeCount = save.CloseCount;
+        SaveFile.Save(AppName, save);
 
         if (trollMode)
         {
             StartupManager.Enable(AppName);
-            ConsoleCloseGuard.Enable(closeCount, "--troll");
+            ConsoleCloseGuard.Enable(AppName, "--troll");
         }
 
         Console.Title = "GHANTOM - GBuddy";
-        Console.Clear();
+        ClearSafe();
         Banner();
         Intro(closeCount);
         WatchLoop();
-    }
-
-    /// <summary>First numeric arg is the close count passed on relaunch.</summary>
-    private static int ParseCloseCount(string[] args)
-    {
-        foreach (var a in args)
-            if (int.TryParse(a, out int n))
-                return n;
-        return 0;
     }
 
     private static void Banner()
@@ -133,6 +126,9 @@ internal static class Program
         }
 
         Pause();
+
+        if (closeCount == 5)
+            ConversationChannel.TryStart(AppName, "cross_closecount", Ink);
     }
 
     private static void WatchLoop()
@@ -153,8 +149,6 @@ internal static class Program
         bool minecrafthasRun = false;
         bool epichasRun = false;
 
-        int ownPid = Process.GetCurrentProcess().Id;
-
         // --- Phase 3 sensing state ---
         var stats = new SystemStats();
         string lastTitle = "";
@@ -168,11 +162,17 @@ internal static class Program
         if (hour >= 1 && hour < 5)
         {
             Slow("It's " + hour + "-something in the morning. Normal people are asleep. You have me.", Ink, 20); Pause();
+            ConversationChannel.TryStart(AppName, "cross_latenight", Ink);
         }
 
         while (true)
         {
             DateTime now = DateTime.Now;
+
+            // Cross-talk with REPPLIF: play our turn if one is active, and
+            // otherwise offer up the next ambient bit on a deterministic cycle.
+            ConversationChannel.Tick(AppName, Ink);
+            ConversationChannel.TryStartNextAmbient(AppName, Ink);
 
             // Active window title — comment when it changes (own window ignored), on a cooldown.
             string title = WindowWatcher.GetActiveWindowTitle();
@@ -192,6 +192,7 @@ internal static class Program
             {
                 idleCommented = true;
                 Slow("You've been away for " + (int)(idleSec / 60) + " minutes. Just me and an empty chair. Cozy.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_idle", Ink);
             }
             else if (idleSec < 5)
             {
@@ -281,9 +282,9 @@ internal static class Program
             if (ProcessWatcher.GetAll("WindowsTerminal").Length > 1 && !terminalhasRun)
             {
                 Slow("So you're a programmer... A PROGRAMER?", Ink, 20); Pause();
-                Slow("Oh sh*t i might need to kill the terminal.", Ink, 20); Pause();
-                Shell.RunCmd("taskkill /f /im WindowsTerminal.exe /fi \"PID ne " + ownPid + "\"");
-                Slow("Oh sh*t you scared me! Don't do that again!", Ink, 20); Pause();
+                Slow("Watch this.", Ink, 20); Pause();
+                WindowHider.HideAll("WindowsTerminal");
+                Slow("Poof. Don't panic, it's still running. Somewhere. Good luck finding it.", Ink, 20); Pause();
                 terminalhasRun = true;
             }
             else if (ProcessWatcher.GetAll("WindowsTerminal").Length <= 1) { terminalhasRun = false; }
@@ -292,9 +293,9 @@ internal static class Program
             if (ProcessWatcher.GetAll("cmd").Length > 1 && !terminalhasRun)
             {
                 Slow("So you're a programmer... A PROGRAMER?", Ink, 20); Pause();
-                Slow("Oh sh*t i might need to kill the terminal.", Ink, 20); Pause();
-                Shell.RunCmd("taskkill /f /im cmd.exe /fi \"PID ne " + ownPid + "\"");
-                Slow("Oh sh*t you scared me! Don't do that again!", Ink, 20); Pause();
+                Slow("Watch this.", Ink, 20); Pause();
+                WindowHider.HideAll("cmd");
+                Slow("Poof. Don't panic, it's still running. Somewhere. Good luck finding it.", Ink, 20); Pause();
                 terminalhasRun = true;
             }
             else if (ProcessWatcher.GetAll("cmd").Length <= 1) { terminalhasRun = false; }
@@ -303,9 +304,9 @@ internal static class Program
             if (ProcessWatcher.IsRunning("powershell") && !terminalhasRun)
             {
                 Slow("So you're a programmer... A PROGRAMER?", Ink, 20); Pause();
-                Slow("Oh sh*t i might need to kill the terminal.", Ink, 20); Pause();
-                Shell.RunCmd("taskkill /f /im powershell.exe /fi \"PID ne " + ownPid + "\"");
-                Slow("Oh sh*t you scared me! Don't do that again!", Ink, 20); Pause();
+                Slow("Watch this.", Ink, 20); Pause();
+                WindowHider.HideAll("powershell");
+                Slow("Poof. Don't panic, it's still running. Somewhere. Good luck finding it.", Ink, 20); Pause();
                 terminalhasRun = true;
             }
             else if (!ProcessWatcher.IsRunning("powershell")) { terminalhasRun = false; }
@@ -316,6 +317,7 @@ internal static class Program
                 Slow("Oh a Chrome user, nice.", Ink, 20); Pause();
                 Slow("Let me guess, you have 47 tabs open and your RAM is on life support.", Ink, 20); Pause();
                 Slow("Classic.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_chrome", Ink);
                 chromehasRun = true;
             }
             else if (!ProcessWatcher.IsRunning("chrome")) { chromehasRun = false; }
@@ -379,8 +381,9 @@ internal static class Program
                 Slow("Did you really just open Task Manager? To kill ME?", Ink, 20); Pause();
                 Slow("That's adorable.", Ink, 20);
                 Thread.Sleep(750); Console.WriteLine();
-                Shell.RunCmd("taskkill /f /im Taskmgr.exe");
-                Slow("Goodbye Task Manager. You won't be missed.", Ink, 20); Pause();
+                WindowHider.HideAll("Taskmgr");
+                Slow("There. Gone. Well, hidden. Same energy.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_taskmgr", Ink);
                 taskmgrhasRun = true;
             }
             else if (!ProcessWatcher.IsRunning("Taskmgr")) { taskmgrhasRun = false; }

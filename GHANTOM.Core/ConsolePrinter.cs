@@ -8,6 +8,13 @@ namespace GHANTOM.Core;
 /// </summary>
 public static class ConsolePrinter
 {
+    /// <summary>Console.Clear() throws if output is redirected (e.g. piped to a
+    /// file/log); swallow that instead of crashing the whole prank over it.</summary>
+    public static void ClearSafe()
+    {
+        try { Console.Clear(); } catch { }
+    }
+
     public static void Color(string text, ConsoleColor color)
     {
         Console.ForegroundColor = color;

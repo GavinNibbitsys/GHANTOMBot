@@ -6,8 +6,10 @@ namespace GHANTOM.Core;
 
 /// <summary>
 /// Restart-on-close: hooks the console control handler so that when the
-/// window is closed the process relaunches itself, passing an incremented
-/// "close count" so the bot can escalate its reaction each time.
+/// window is closed the process relaunches itself. The close count is read
+/// from and written to the shared <see cref="SaveFile"/>, so escalation
+/// survives reboots and manual restarts, not just the parent/child relaunch
+/// chain.
 /// </summary>
 public static class ConsoleCloseGuard
 {
@@ -19,18 +21,17 @@ public static class ConsoleCloseGuard
     // Held in a static field so the delegate isn't garbage-collected while
     // the native side still holds the callback pointer.
     private static ConsoleCtrlDelegate _handler;
-    private static int _closeCount;
+    private static string _appName;
     private static string _persistentFlags = "";
 
     /// <summary>
-    /// Enable restart-on-close. <paramref name="closeCount"/> is the count
-    /// this instance was launched with; on close it relaunches with count+1.
-    /// <paramref name="persistentFlags"/> (e.g. "--troll") are forwarded to the
-    /// relaunched instance so it stays in the same mode.
+    /// Enable restart-on-close for <paramref name="appName"/>.
+    /// <paramref name="persistentFlags"/> (e.g. "--troll") are forwarded to
+    /// the relaunched instance so it stays in the same mode.
     /// </summary>
-    public static void Enable(int closeCount, string persistentFlags = "")
+    public static void Enable(string appName, string persistentFlags = "")
     {
-        _closeCount = closeCount;
+        _appName = appName;
         _persistentFlags = persistentFlags ?? "";
         _handler = Handler;
         SetConsoleCtrlHandler(_handler, true);
@@ -38,11 +39,15 @@ public static class ConsoleCloseGuard
 
     private static bool Handler(int sig)
     {
+        var data = SaveFile.Load(_appName);
+        data.CloseCount++;
+        SaveFile.Save(_appName, data);
+
         string exe = Process.GetCurrentProcess().MainModule.FileName;
         Process.Start(new ProcessStartInfo
         {
             FileName = exe,
-            Arguments = (_persistentFlags + " " + (_closeCount + 1)).Trim(),
+            Arguments = _persistentFlags,
             UseShellExecute = true
         });
 

@@ -5,8 +5,8 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <RootNamespace>BOT2</RootNamespace>
-    <AssemblyName>BOT2</AssemblyName>
+    <RootNamespace>REPPLIF</RootNamespace>
+    <AssemblyName>REPPLIF</AssemblyName>
     <!-- Fold WinForms native libs into the single-file exe on publish -->
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>

@@ -8,4 +8,8 @@
     <RootNamespace>GHANTOM.Core</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Conversation\script.json" />
+  </ItemGroup>
+
 </Project>
