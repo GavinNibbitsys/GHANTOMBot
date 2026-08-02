@@ -155,8 +155,64 @@ internal static class Program
 
         int ownPid = Process.GetCurrentProcess().Id;
 
+        // --- Phase 3 sensing state ---
+        var stats = new SystemStats();
+        string lastTitle = "";
+        bool idleCommented = false;
+        DateTime lastTitleComment = DateTime.MinValue;
+        DateTime lastCpuComment = DateTime.MinValue;
+        DateTime lastMemComment = DateTime.MinValue;
+
+        // Late-night line, once at startup.
+        int hour = SystemStats.CurrentHour;
+        if (hour >= 1 && hour < 5)
+        {
+            Slow("It's " + hour + "-something in the morning. Normal people are asleep. You have me.", Ink, 20); Pause();
+        }
+
         while (true)
         {
+            DateTime now = DateTime.Now;
+
+            // Active window title — comment when it changes (own window ignored), on a cooldown.
+            string title = WindowWatcher.GetActiveWindowTitle();
+            if (!string.IsNullOrWhiteSpace(title) && title != lastTitle)
+            {
+                lastTitle = title;
+                if (!title.Contains("GHANTOM") && (now - lastTitleComment).TotalSeconds > 45)
+                {
+                    lastTitleComment = now;
+                    Slow("\"" + title + "\". Yeah, I can read your window titles. I see everything.", Ink, 20); Pause();
+                }
+            }
+
+            // Idle time — one AFK jab per idle stretch.
+            double idleSec = IdleWatcher.GetIdleTime().TotalSeconds;
+            if (idleSec >= 120 && !idleCommented)
+            {
+                idleCommented = true;
+                Slow("You've been away for " + (int)(idleSec / 60) + " minutes. Just me and an empty chair. Cozy.", Ink, 20); Pause();
+            }
+            else if (idleSec < 5)
+            {
+                idleCommented = false;
+            }
+
+            // System stats — CPU and RAM pressure, each on its own cooldown.
+            double cpu = stats.CpuPercent();
+            if (cpu >= 85 && (now - lastCpuComment).TotalSeconds > 60)
+            {
+                lastCpuComment = now;
+                Slow("Your CPU is at " + (int)cpu + "%. It's begging for mercy. I can hear the fans.", Ink, 20); Pause();
+            }
+
+            int mem = stats.MemoryUsedPercent();
+            if (mem >= 85 && (now - lastMemComment).TotalSeconds > 90)
+            {
+                lastMemComment = now;
+                Slow("RAM is at " + mem + "%. Close some tabs before this thing keels over.", Ink, 20); Pause();
+            }
+
             // Notepad check
             if (ProcessWatcher.IsRunning("notepad") && !notepadhasRun)
             {
