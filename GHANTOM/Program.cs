@@ -321,9 +321,9 @@ internal static class Program
         bool vscodehasRun = ProcessWatcher.IsRunning("code");
         bool mspainthasRun = ProcessWatcher.IsRunning("mspaint");
         bool calchasRun = ProcessWatcher.IsRunning("CalculatorApp");
-        bool terminalhasRun = ProcessWatcher.GetAll("WindowsTerminal").Length > 1
-            || ProcessWatcher.GetAll("cmd").Length > 1
-            || ProcessWatcher.IsRunning("powershell");
+        bool winTerminalhasRun = ProcessWatcher.GetAll("WindowsTerminal").Length > 1;
+        bool cmdhasRun = ProcessWatcher.GetAll("cmd").Length > 1;
+        bool powershellhasRun = ProcessWatcher.IsRunning("powershell");
         bool chromehasRun = ProcessWatcher.IsRunning("chrome");
         bool edgehasRun = ProcessWatcher.IsRunning("msedge");
         bool firefoxhasRun = ProcessWatcher.IsRunning("firefox");
@@ -488,7 +488,7 @@ internal static class Program
             else if (!ProcessWatcher.IsRunning("CalculatorApp")) { calchasRun = false; }
 
             // Windows Terminal check
-            if (ProcessWatcher.GetAll("WindowsTerminal").Length > 1 && !terminalhasRun)
+            if (ProcessWatcher.GetAll("WindowsTerminal").Length > 1 && !winTerminalhasRun)
             {
                 Slow("So you're a programmer... A PROGRAMER?", Ink, 20); Pause();
                 Slow("Multiple terminal tabs open. Very serious. Very important work, I'm sure.", Ink, 20); Pause();
@@ -496,12 +496,12 @@ internal static class Program
                 WindowHider.HideAll("WindowsTerminal");
                 Slow("Poof. Don't panic, it's still running. Somewhere. Good luck finding it.", Ink, 20); Pause();
                 RandomTriplet(TerminalTriplets);
-                terminalhasRun = true;
+                winTerminalhasRun = true;
             }
-            else if (ProcessWatcher.GetAll("WindowsTerminal").Length <= 1) { terminalhasRun = false; }
+            else if (ProcessWatcher.GetAll("WindowsTerminal").Length <= 1) { winTerminalhasRun = false; }
 
             // Command Prompt check
-            if (ProcessWatcher.GetAll("cmd").Length > 1 && !terminalhasRun)
+            if (ProcessWatcher.GetAll("cmd").Length > 1 && !cmdhasRun)
             {
                 Slow("So you're a programmer... A PROGRAMER?", Ink, 20); Pause();
                 Slow("cmd.exe. In this economy.", Ink, 20); Pause();
@@ -509,12 +509,12 @@ internal static class Program
                 WindowHider.HideAll("cmd");
                 Slow("Poof. Don't panic, it's still running. Somewhere. Good luck finding it.", Ink, 20); Pause();
                 RandomTriplet(TerminalTriplets);
-                terminalhasRun = true;
+                cmdhasRun = true;
             }
-            else if (ProcessWatcher.GetAll("cmd").Length <= 1) { terminalhasRun = false; }
+            else if (ProcessWatcher.GetAll("cmd").Length <= 1) { cmdhasRun = false; }
 
             // PowerShell check
-            if (ProcessWatcher.IsRunning("powershell") && !terminalhasRun)
+            if (ProcessWatcher.IsRunning("powershell") && !powershellhasRun)
             {
                 Slow("So you're a programmer... A PROGRAMER?", Ink, 20); Pause();
                 Slow("PowerShell. Ooh, fancy. Bet you still copy-paste every command from a forum post.", Ink, 20); Pause();
@@ -522,9 +522,9 @@ internal static class Program
                 WindowHider.HideAll("powershell");
                 Slow("Poof. Don't panic, it's still running. Somewhere. Good luck finding it.", Ink, 20); Pause();
                 RandomTriplet(TerminalTriplets);
-                terminalhasRun = true;
+                powershellhasRun = true;
             }
-            else if (!ProcessWatcher.IsRunning("powershell")) { terminalhasRun = false; }
+            else if (!ProcessWatcher.IsRunning("powershell")) { powershellhasRun = false; }
 
             // Chrome check
             if (ProcessWatcher.IsRunning("chrome") && !chromehasRun)
