@@ -20,3 +20,6 @@ obj/
 # OS cruft
 Thumbs.db
 desktop.ini
+
+# Private lore canon — not for git, the mystery stays a mystery
+LORE.md
