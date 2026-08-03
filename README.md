@@ -10,6 +10,20 @@ but it *behaves* like the annoying kind of software on purpose (autostart,
 restart-on-close), so see the Defender/SmartScreen note below before you run it
 on someone.
 
+## Installing
+
+No installer, no admin rights, no .NET install needed — just two exes.
+
+1. Grab `GHANTOM.exe` and/or `REPPLIF.exe` from [Releases](../../releases).
+2. Save them wherever's convenient. They don't need to be in the same
+   folder, or in any particular folder at all.
+3. Double-click to run, or run from a terminal if you want to pass flags
+   (see below).
+
+Run both for the two-bot experience — see "Running it" below. First launch
+will likely trip a SmartScreen warning; that's expected, see the
+Defender/SmartScreen note below before you click past it.
+
 ## Running it
 
 Each bot is its own exe: `GHANTOM.exe` and `REPPLIF.exe`. Run either or both.
@@ -18,17 +32,15 @@ Each bot is its own exe: `GHANTOM.exe` and `REPPLIF.exe`. Run either or both.
   closing the window closes it for good and nothing touches your startup
   programs.
 - **`--troll`** — the full prank. Adds itself to your Windows startup
-  (`HKCU\...\Run`) and relaunches itself if you try to close it.
+  (`HKCU\...\Run` — a per-user registry key, no admin rights needed) and
+  relaunches itself if you try to close it.
 - **`--untroll`** — removes the startup entry so the bot stops launching at
   login. Run this to clean a machine.
 
 Run both `GHANTOM.exe` and `REPPLIF.exe` together for the two-bot experience —
 they talk to each other across their two windows via a small shared state file
-in `%LOCALAPPDATA%\GHANTOM\`.
-
-Don't want to type the full exe path every time? Run `.\install-aliases.ps1`
-once to add `ghantom` and `repplif` PowerShell functions to your `$PROFILE` —
-flags like `--troll`/`--untroll` still pass through (e.g. `ghantom --troll`).
+in `%LOCALAPPDATA%\GHANTOM\`, so it doesn't matter which folder each one runs
+from.
 
 ## Heads up: Defender / SmartScreen
 
@@ -54,5 +66,12 @@ dotnet publish GHANTOM\GHANTOM.csproj -c Release -r win-x64 --self-contained tru
 dotnet publish REPPLIF\REPPLIF.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish\REPPLIF
 ```
 
-Built exes aren't committed to this repo — grab them from
-[Releases](../../releases) instead.
+Built exes aren't committed to this repo — grab prebuilt ones from
+[Releases](../../releases) instead if you don't need to build from source.
+
+Working from a clone and don't want to type the full exe path every time?
+Run `.\install-aliases.ps1` once to add `ghantom` and `repplif` PowerShell
+functions to your `$PROFILE` that find the exe under this repo (built or
+published) — flags like `--troll`/`--untroll` still pass through (e.g.
+`ghantom --troll`). This only works from a local clone, not with exes
+downloaded standalone from Releases.

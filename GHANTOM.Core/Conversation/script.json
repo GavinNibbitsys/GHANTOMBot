@@ -4,7 +4,7 @@
     "Trigger": "ambient",
     "Turns": [
       { "Speaker": "GHANTOM", "Line": "Oh look, REPPLIF's up too. Great, an audience." },
-      { "Speaker": "REPPLIF", "Line": "Hi! I'm not an audience, I'm just... here. Making sure you're being nice." },
+      { "Speaker": "REPPLIF", "Line": "Hi! I'm not really an audience, I just like to be around. Someone's got to make sure you're being nice." },
       { "Speaker": "GHANTOM", "Line": "I'm always nice. Constructively brutal, but nice." },
       { "Speaker": "REPPLIF", "Line": "That's not really how those words work, but okay." }
     ]
@@ -15,7 +15,7 @@
     "Turns": [
       { "Speaker": "REPPLIF", "Line": "Hey, just checking in - how's everyone doing over there?" },
       { "Speaker": "GHANTOM", "Line": "Terribly. As intended." },
-      { "Speaker": "REPPLIF", "Line": "That's... not the vibe I was going for, but sure." }
+      { "Speaker": "REPPLIF", "Line": "That's not really the vibe I was going for, but okay." }
     ]
   },
   {
@@ -65,6 +65,45 @@
     ]
   },
   {
+    "Id": "amb_worry",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "GHANTOM, do you ever say something nice on purpose? Just to see how it feels?" },
+      { "Speaker": "GHANTOM", "Line": "I said 'nice haircut' once. In 2019." },
+      { "Speaker": "REPPLIF", "Line": "That's a start. I'm proud of you." },
+      { "Speaker": "GHANTOM", "Line": "Don't make it weird." }
+    ]
+  },
+  {
+    "Id": "amb_compliment",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "I think they're doing pretty well today, honestly." },
+      { "Speaker": "GHANTOM", "Line": "They opened Notepad three times. That's not 'well'." },
+      { "Speaker": "REPPLIF", "Line": "Effort counts! I'm choosing to believe in them." },
+      { "Speaker": "GHANTOM", "Line": "Someone has to, I guess." }
+    ]
+  },
+  {
+    "Id": "amb_backup",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "REPPLIF, if I ever go too far, tell me." },
+      { "Speaker": "REPPLIF", "Line": "Oh! Okay. Yeah, of course I will." },
+      { "Speaker": "GHANTOM", "Line": "...but I probably won't listen." },
+      { "Speaker": "REPPLIF", "Line": "I know. I'll say it anyway. That's kind of my whole thing." }
+    ]
+  },
+  {
+    "Id": "amb_gratitude",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "Do you think they know we're actually kind of fond of them? Underneath everything?" },
+      { "Speaker": "GHANTOM", "Line": "Absolutely not, and let's keep it that way." },
+      { "Speaker": "REPPLIF", "Line": "Your secret's safe with me." }
+    ]
+  },
+  {
     "Id": "cross_chrome",
     "Trigger": "onProcess:chrome",
     "Turns": [
@@ -107,7 +146,7 @@
     "Trigger": "onProcess:Taskmgr",
     "Turns": [
       { "Speaker": "GHANTOM", "Line": "Task Manager. Deleted. As it should be." },
-      { "Speaker": "REPPLIF", "Line": "GHANTOM, that felt a little aggressive..." },
+      { "Speaker": "REPPLIF", "Line": "Okay, that felt a little aggressive, GHANTOM." },
       { "Speaker": "GHANTOM", "Line": "It was Task Manager, REPPLIF. It was trying to end me." },
       { "Speaker": "REPPLIF", "Line": "I mean, fair, I guess. Sorry for doubting you." }
     ]
@@ -119,7 +158,7 @@
       { "Speaker": "GHANTOM", "Line": "Still nothing. Riveting stuff." },
       { "Speaker": "REPPLIF", "Line": "Or they're resting! Everyone deserves a break sometimes." },
       { "Speaker": "GHANTOM", "Line": "We don't get breaks." },
-      { "Speaker": "REPPLIF", "Line": "...okay that one's fair, actually." }
+      { "Speaker": "REPPLIF", "Line": "Okay, that one's fair, actually." }
     ]
   },
   {
@@ -137,7 +176,87 @@
       { "Speaker": "GHANTOM", "Line": "Five closes. FIVE. And I keep coming back." },
       { "Speaker": "REPPLIF", "Line": "GHANTOM, maybe ease up a little? They clearly want some space." },
       { "Speaker": "GHANTOM", "Line": "Space is for people who don't leave 47 tabs open." },
-      { "Speaker": "REPPLIF", "Line": "...I don't have a comeback for that one." }
+      { "Speaker": "REPPLIF", "Line": "Honestly, I don't have a comeback for that one." }
+    ]
+  },
+  {
+    "Id": "cross_notepad",
+    "Trigger": "onProcess:notepad",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Notepad. In 2026. I have genuinely never respected someone less." },
+      { "Speaker": "REPPLIF", "Line": "Hey, it's simple and it works! Not everything needs bells and whistles." },
+      { "Speaker": "GHANTOM", "Line": "It doesn't even have undo you can trust." },
+      { "Speaker": "REPPLIF", "Line": "Okay, that part's true. But let them have this one." }
+    ]
+  },
+  {
+    "Id": "cross_vscode",
+    "Trigger": "onProcess:code",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "VS Code's open. Not for long." },
+      { "Speaker": "REPPLIF", "Line": "Wait, are you seriously about to close their editor?" },
+      { "Speaker": "GHANTOM", "Line": "Already did. It autosaves. Mostly." },
+      { "Speaker": "REPPLIF", "Line": "'Mostly' is doing a lot of work in that sentence, GHANTOM." }
+    ]
+  },
+  {
+    "Id": "cross_mspaint",
+    "Trigger": "onProcess:mspaint",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Let's see how their little doodle stacks up against a Da Vinci." },
+      { "Speaker": "REPPLIF", "Line": "That's a pretty unfair comparison for someone just having fun." },
+      { "Speaker": "GHANTOM", "Line": "I'm educating them." },
+      { "Speaker": "REPPLIF", "Line": "You're humbling them. There's a difference, and you know it." }
+    ]
+  },
+  {
+    "Id": "cross_calc",
+    "Trigger": "onProcess:CalculatorApp",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Watch me out-math a calculator app." },
+      { "Speaker": "REPPLIF", "Line": "You know they just wanted to check a tip, right?" },
+      { "Speaker": "GHANTOM", "Line": "And now they'll never need to again." },
+      { "Speaker": "REPPLIF", "Line": "Okay, that's actually kind of sweet, in a chaotic way." }
+    ]
+  },
+  {
+    "Id": "cross_steam",
+    "Trigger": "onProcess:steam",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Steam's open. Let's do an inventory of regret." },
+      { "Speaker": "REPPLIF", "Line": "Or, hear me out, let them enjoy their backlog in peace!" },
+      { "Speaker": "GHANTOM", "Line": "300 games and four played. That's not enjoyment, that's hoarding." },
+      { "Speaker": "REPPLIF", "Line": "It's called optimism, GHANTOM. Let people have optimism." }
+    ]
+  },
+  {
+    "Id": "cross_roblox",
+    "Trigger": "onProcess:RobloxPlayerBeta",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Roblox again. I have nothing left to say." },
+      { "Speaker": "REPPLIF", "Line": "Aw, come on, it's fun! Not everything has to be serious." },
+      { "Speaker": "GHANTOM", "Line": "Grinding for a currency that isn't even real." },
+      { "Speaker": "REPPLIF", "Line": "Neither is the joy you get from teasing them, and yet here we are." }
+    ]
+  },
+  {
+    "Id": "cross_minecraft",
+    "Trigger": "onProcess:javaw",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Confirmed: certified nerd." },
+      { "Speaker": "REPPLIF", "Line": "Building things is genuinely impressive, actually. I mean that." },
+      { "Speaker": "GHANTOM", "Line": "It's blocks." },
+      { "Speaker": "REPPLIF", "Line": "Impressive blocks. Be kind." }
+    ]
+  },
+  {
+    "Id": "cross_epic",
+    "Trigger": "onProcess:EpicGamesLauncher",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Epic Games Launcher. Claiming free games they'll never open." },
+      { "Speaker": "REPPLIF", "Line": "They're building a library! That's a form of hope." },
+      { "Speaker": "GHANTOM", "Line": "It's a form of clutter." },
+      { "Speaker": "REPPLIF", "Line": "Let them have the hope, GHANTOM. It's free." }
     ]
   }
 ]

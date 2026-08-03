@@ -46,7 +46,7 @@ internal static class Program
     private static void Intro(int closeCount)
     {
         Slow("Hi! I'm REPPLIF.", Ink, 20); Pause();
-        Slow("GHANTOM said I should introduce myself. I'm... a little doubtful about all this, honestly.", Ink, 20); Pause();
+        Slow("GHANTOM said I should introduce myself. Honestly, I'm a little doubtful about all this.", Ink, 20); Pause();
         Slow("But I promise I'm the friendly one. Mostly here to keep an eye on things. Gently.", Ink, 20); Pause();
 
         if (closeCount >= 1)
