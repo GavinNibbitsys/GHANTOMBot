@@ -26,6 +26,10 @@ Run both `GHANTOM.exe` and `REPPLIF.exe` together for the two-bot experience —
 they talk to each other across their two windows via a small shared state file
 in `%LOCALAPPDATA%\GHANTOM\`.
 
+Don't want to type the full exe path every time? Run `.\install-aliases.ps1`
+once to add `ghantom` and `repplif` PowerShell functions to your `$PROFILE` —
+flags like `--troll`/`--untroll` still pass through (e.g. `ghantom --troll`).
+
 ## Heads up: Defender / SmartScreen
 
 Autostart + restart-on-close is exactly the pattern antivirus heuristics flag.
