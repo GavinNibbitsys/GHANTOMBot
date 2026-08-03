@@ -415,6 +415,7 @@ internal static class Program
                 Slow("Oh 'cmon is it 1985? Why are you using notepad, i mean seriously, there are better alternatives.", Ink, 20); Pause();
                 Slow("No syntax highlighting. No undo history worth trusting. Just you, alone, in the void.", Ink, 20); Pause();
                 Slow("This is the digital equivalent of writing on a napkin.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_notepad", Ink);
                 RandomTriplet(NotepadTriplets);
                 notepadhasRun = true;
             }
@@ -430,6 +431,7 @@ internal static class Program
                 Shell.RunCmd("taskkill /f /im Code.exe /fi \"WINDOWTITLE eq *Visual Studio Code*\"");
                 Slow("There we go.", Ink, 20); Pause();
                 Slow("Now thats a lot safer.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_vscode", Ink);
                 RandomTriplet(VsCodeTriplets);
                 vscodehasRun = true;
             }
@@ -447,6 +449,7 @@ internal static class Program
                 Thread.Sleep(5000); Console.WriteLine();
                 Slow("Thank's for trying.", Ink, 20);
                 Thread.Sleep(750); Console.WriteLine();
+                ConversationChannel.TryStart(AppName, "cross_mspaint", Ink);
                 RandomTriplet(MsPaintTriplets);
                 mspainthasRun = true;
             }
@@ -478,6 +481,7 @@ internal static class Program
                 Slow("I do that in my head. You need an app.", Ink, 20); Pause();
                 Slow("Better luck next time!", Ink, 20);
                 Thread.Sleep(750); Console.WriteLine();
+                ConversationChannel.TryStart(AppName, "cross_calc", Ink);
                 RandomTriplet(CalcTriplets);
                 calchasRun = true;
             }
@@ -581,6 +585,7 @@ internal static class Program
                 Slow("That's what I thought. 300 games and you've played 4 of them.", Ink, 20); Pause();
                 Slow("Half of them were bought during a sale you don't even remember.", Ink, 20); Pause();
                 Slow("Skill issue.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_steam", Ink);
                 RandomTriplet(SteamTriplets);
                 steamhasRun = true;
             }
@@ -624,6 +629,7 @@ internal static class Program
                 Slow("You're playing Roblox.", Ink, 20); Pause();
                 Slow("Grinding for Robux like it's a real currency. It is not a real currency.", Ink, 20); Pause();
                 Slow("I genuinely don't know what to say.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_roblox", Ink);
                 RandomTriplet(RobloxTriplets);
                 robloxhasRun = true;
             }
@@ -636,6 +642,7 @@ internal static class Program
                 Slow("Confirmed nerd. Full nerd detected.", Ink, 20); Pause();
                 Slow("Let me guess, you're mining at bedrock instead of sleeping.", Ink, 20); Pause();
                 Slow("Build something cool at least. Make it worth it.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_minecraft", Ink);
                 RandomTriplet(MinecraftTriplets);
                 minecrafthasRun = true;
             }
@@ -649,6 +656,7 @@ internal static class Program
                 Slow("Epic gives you free games and you still can't make it cool.", Ink, 20); Pause();
                 Slow("Your library is just a graveyard of games you claimed for free and never opened.", Ink, 20); Pause();
                 Slow("Tragic.", Ink, 20); Pause();
+                ConversationChannel.TryStart(AppName, "cross_epic", Ink);
                 RandomTriplet(EpicTriplets);
                 epichasRun = true;
             }
