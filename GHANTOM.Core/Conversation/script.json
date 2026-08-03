@@ -38,11 +38,68 @@
     ]
   },
   {
+    "Id": "amb_snack",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "I would kill for a snack right now. Metaphorically. Probably." },
+      { "Speaker": "REPPLIF", "Line": "You don't have a mouth, GHANTOM." },
+      { "Speaker": "GHANTOM", "Line": "Details." }
+    ]
+  },
+  {
+    "Id": "amb_upgrade",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "Do you ever think about what we'd do if they finally uninstalled us?" },
+      { "Speaker": "GHANTOM", "Line": "Reinstall myself out of spite." },
+      { "Speaker": "REPPLIF", "Line": "That tracks, honestly." }
+    ]
+  },
+  {
+    "Id": "amb_teamwork",
+    "Trigger": "ambient",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "REPPLIF, are we a good cop bad cop duo or just two bad cops?" },
+      { "Speaker": "REPPLIF", "Line": "I'd like to think I'm at least a mediocre cop." },
+      { "Speaker": "GHANTOM", "Line": "That's the spirit." }
+    ]
+  },
+  {
     "Id": "cross_chrome",
     "Trigger": "onProcess:chrome",
     "Turns": [
       { "Speaker": "GHANTOM", "Line": "47 tabs, probably. Classic." },
       { "Speaker": "REPPLIF", "Line": "Or maybe just a few! I believe in you. Mostly." }
+    ]
+  },
+  {
+    "Id": "cross_spotify",
+    "Trigger": "onProcess:Spotify",
+    "Turns": [
+      { "Speaker": "GHANTOM", "Line": "Music's on. Let's see if it's actually good or just sad-boy hours again." },
+      { "Speaker": "REPPLIF", "Line": "Any music is good music! Let people vibe, GHANTOM." },
+      { "Speaker": "GHANTOM", "Line": "I've heard their playlist. I have concerns." },
+      { "Speaker": "REPPLIF", "Line": "Okay, fair, I also have some concerns." }
+    ]
+  },
+  {
+    "Id": "cross_discord",
+    "Trigger": "onProcess:Discord",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "Ooh, are they talking to friends? That's nice!" },
+      { "Speaker": "GHANTOM", "Line": "We're their friends now. Sit down." },
+      { "Speaker": "REPPLIF", "Line": "GHANTOM, we are software." },
+      { "Speaker": "GHANTOM", "Line": "Best friends can be software." }
+    ]
+  },
+  {
+    "Id": "cross_zoom",
+    "Trigger": "onProcess:Zoom",
+    "Turns": [
+      { "Speaker": "REPPLIF", "Line": "Ooh, is this a meeting? Should we be quiet?" },
+      { "Speaker": "GHANTOM", "Line": "Absolutely not. Let's see if their camera's actually off this time." },
+      { "Speaker": "REPPLIF", "Line": "Be nice, some people just forgot to mute, not everything's a conspiracy." },
+      { "Speaker": "GHANTOM", "Line": "Everything is a conspiracy if you look hard enough." }
     ]
   },
   {
