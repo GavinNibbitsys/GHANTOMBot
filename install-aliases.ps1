@@ -1,6 +1,9 @@
 <#
 Installs `ghantom` / `repplif` PowerShell functions into your $PROFILE so you
-can launch the bots by name instead of typing the full exe path. Safe to
+can launch the bots by name instead of typing the full exe path. Also installs
+`ghantom-update` / `repplif-update`, which pull the latest git changes and
+rebuild both exes -- save data lives outside the repo
+(%LOCALAPPDATA%\GHANTOM\*.save.json) so updating never touches it. Safe to
 re-run; it won't duplicate entries.
 #>
 
@@ -39,6 +42,43 @@ function Start-GhantomBot {
 
     & `$exePath @Args
 }
+
+function ghantom-update { Update-GhantomBots }
+function repplif-update { Update-GhantomBots }
+
+function Update-GhantomBots {
+    `$repoRoot = '$repoRoot'
+
+    `$dirty = git -C `$repoRoot status --porcelain
+    if (`$dirty) {
+        Write-Warning "Uncommitted changes in `$repoRoot -- 'git pull' may refuse to run. Commit or stash first if it does."
+    }
+
+    Write-Host "Pulling latest changes in `$repoRoot..."
+    git -C `$repoRoot pull --ff-only
+    if (`$LASTEXITCODE -ne 0) {
+        Write-Warning "git pull failed (probably diverged/conflicting local changes) -- resolve it manually in `$repoRoot, then re-run the update."
+        return
+    }
+
+    `$dotnet = 'dotnet'
+    if (-not (& `$dotnet --list-sdks 2>`$null)) {
+        `$fallback = Join-Path `$env:LOCALAPPDATA 'Microsoft\dotnet\dotnet.exe'
+        if (Test-Path `$fallback) {
+            `$dotnet = `$fallback
+        }
+    }
+
+    foreach (`$bot in @('GHANTOM', 'REPPLIF')) {
+        Write-Host "Publishing `$bot..."
+        & `$dotnet publish "`$repoRoot\`$bot\`$bot.csproj" -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o "`$repoRoot\publish\`$bot"
+        if (`$LASTEXITCODE -ne 0) {
+            Write-Warning "Publish failed for `$bot -- see errors above."
+        }
+    }
+
+    Write-Host "Update complete. Save data under `$env:LOCALAPPDATA\GHANTOM\ is untouched -- run 'ghantom' or 'repplif' to launch the updated build."
+}
 $markerEnd
 "@
 
@@ -61,4 +101,4 @@ if ($existing -and $existing.Contains($markerStart)) {
     Write-Host "Added GHANTOM aliases to $PROFILE."
 }
 
-Write-Host "Restart your shell or run '. `$PROFILE' to use 'ghantom' and 'repplif' now."
+Write-Host "Restart your shell or run '. `$PROFILE' to use 'ghantom', 'repplif', 'ghantom-update', and 'repplif-update' now."

@@ -75,3 +75,9 @@ functions to your `$PROFILE` that find the exe under this repo (built or
 published) — flags like `--troll`/`--untroll` still pass through (e.g.
 `ghantom --troll`). This only works from a local clone, not with exes
 downloaded standalone from Releases.
+
+The same script also adds `ghantom-update` / `repplif-update` — either one
+`git pull`s the repo (fast-forward only) and rebuilds both exes with the
+publish command above. Your save data (`%LOCALAPPDATA%\GHANTOM\*.save.json`)
+and the cross-talk cue file live outside the repo, so updating never resets
+them.
