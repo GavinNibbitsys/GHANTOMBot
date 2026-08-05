@@ -410,7 +410,7 @@ internal static class Program
             {
                 lastTitle = title;
                 bool journalHandled = JournalWatcher.CheckTitle(title, Ink);
-                if (!journalHandled && !title.Contains("GHANTOM") && (now - lastTitleComment).TotalSeconds > 45)
+                if (!journalHandled && !title.Contains("GHANTOM") && !title.Contains("REPPLIF") && (now - lastTitleComment).TotalSeconds > 45)
                 {
                     lastTitleComment = now;
                     Slow("\"" + title + "\". Yeah, I can read your window titles. I see everything.", Ink, 20); Pause();
