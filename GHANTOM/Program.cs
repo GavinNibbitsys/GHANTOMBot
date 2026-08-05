@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using GHANTOM.Core;
+using GHANTOM.Core.Journal;
 using static GHANTOM.Core.ConsolePrinter;
 
 namespace GHANTOM;
@@ -32,6 +33,7 @@ internal static class Program
         {
             StartupManager.Enable(AppName);
             ConsoleCloseGuard.Enable(AppName, "--troll");
+            JournalPlanter.EnsurePlanted();
         }
 
         Console.Title = "GHANTOM - GBuddy";
@@ -56,6 +58,35 @@ internal static class Program
     }
 
     private static void Pause() { Thread.Sleep(500); Console.WriteLine(); }
+
+    // Part 3 of the capstone (LORE.md): once the scripted exchange for
+    // finding every journal file wraps up, drop the one message in this
+    // whole app that isn't GHANTOM or REPPLIF talking - straight from
+    // Dohkoh4 and Gavin. Only fires once, and only after the exchange is
+    // fully done playing out across both windows.
+    private static void DeliverCreatorsMessageIfReady()
+    {
+        var manifest = JournalManifest.Load();
+        if (!manifest.CapstoneExchangeStarted || manifest.CreatorsMessageDelivered) return;
+        if (!ConversationChannel.IsIdle()) return;
+
+        string message = JournalArchive.CreatorsMessage;
+        if (string.IsNullOrWhiteSpace(message)) return;
+
+        try
+        {
+            Directory.CreateDirectory(JournalManifest.CollectedFolder);
+            File.WriteAllText(Path.Combine(JournalManifest.CollectedFolder, "from_dohkoh4_and_gavin.txt"), message);
+        }
+        catch
+        {
+            // Best-effort; the flag below still flips so we don't retry forever.
+        }
+
+        Slow("...one more thing just landed in your collected folder.", Ink, 20); Pause();
+        manifest.CreatorsMessageDelivered = true;
+        JournalManifest.Save(manifest);
+    }
 
     private static void Intro(int closeCount)
     {
@@ -369,12 +400,17 @@ internal static class Program
             ConversationChannel.Tick(AppName, Ink);
             ConversationChannel.TryStartNextAmbient(AppName, Ink);
 
+            // Capstone: once the scripted GHANTOM<->REPPLIF exchange for finding
+            // every journal file finishes, hand over the one genuine reward.
+            DeliverCreatorsMessageIfReady();
+
             // Active window title — comment when it changes (own window ignored), on a cooldown.
             string title = WindowWatcher.GetActiveWindowTitle();
             if (!string.IsNullOrWhiteSpace(title) && title != lastTitle)
             {
                 lastTitle = title;
-                if (!title.Contains("GHANTOM") && (now - lastTitleComment).TotalSeconds > 45)
+                bool journalHandled = JournalWatcher.CheckTitle(title, Ink);
+                if (!journalHandled && !title.Contains("GHANTOM") && (now - lastTitleComment).TotalSeconds > 45)
                 {
                     lastTitleComment = now;
                     Slow("\"" + title + "\". Yeah, I can read your window titles. I see everything.", Ink, 20); Pause();
