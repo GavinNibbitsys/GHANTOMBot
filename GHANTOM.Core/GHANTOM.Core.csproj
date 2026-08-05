@@ -10,6 +10,23 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Conversation\script.json" />
+
+    <!-- Private lore content: Lore/ is gitignored and may not exist on every
+         clone (a teammate who hasn't received the lore text yet, or CI). Each
+         entry is conditioned on the file/folder existing so a clone without
+         Lore/ still builds - the journal mechanic just no-ops at runtime. -->
+    <EmbeddedResource Include="..\Lore\JournalEntries\*.txt" Condition="Exists('..\Lore\JournalEntries')">
+      <LogicalName>GHANTOM.Core.Lore.Journal.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Lore\reactions.json" Condition="Exists('..\Lore\reactions.json')">
+      <LogicalName>GHANTOM.Core.Lore.reactions.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Lore\capstone_exchange_draft.json" Condition="Exists('..\Lore\capstone_exchange_draft.json')">
+      <LogicalName>GHANTOM.Core.Lore.capstone_exchange.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Lore\creators_message.txt" Condition="Exists('..\Lore\creators_message.txt')">
+      <LogicalName>GHANTOM.Core.Lore.creators_message.txt</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

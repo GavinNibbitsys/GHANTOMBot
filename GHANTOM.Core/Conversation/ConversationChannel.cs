@@ -78,6 +78,9 @@ public static class ConversationChannel
         return true;
     }
 
+    /// <summary>True when no exchange is currently active - safe to start a new one.</summary>
+    public static bool IsIdle() => Load().ExchangeId == null;
+
     /// <summary>
     /// Deterministic round-robin through the ambient exchanges: only fires
     /// when nothing is active and the cooldown has elapsed, and only the bot

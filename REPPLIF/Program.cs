@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using GHANTOM.Core;
+using GHANTOM.Core.Journal;
 using static GHANTOM.Core.ConsolePrinter;
 
 namespace REPPLIF;
@@ -43,6 +44,19 @@ internal static class Program
 
     private static void Pause() { Thread.Sleep(500); Console.WriteLine(); }
 
+    private static void TryStartCapstoneExchange()
+    {
+        var manifest = JournalManifest.Load();
+        if (!manifest.CapstoneDiscovered || manifest.CapstoneExchangeStarted) return;
+        if (!ConversationChannel.IsIdle()) return;
+
+        if (ConversationChannel.TryStart(AppName, "capstone_journals_found", Ink))
+        {
+            manifest.CapstoneExchangeStarted = true;
+            JournalManifest.Save(manifest);
+        }
+    }
+
     private static void Intro(int closeCount)
     {
         Slow("Hi! I'm REPPLIF.", Ink, 20); Pause();
@@ -68,6 +82,11 @@ internal static class Program
             // going on.
             ConversationChannel.Tick(AppName, Ink);
             ConversationChannel.TryStartNextAmbient(AppName, Ink);
+
+            // Capstone: GHANTOM watches for the last journal file being
+            // opened and flags it in the shared manifest; REPPLIF speaks the
+            // opening line of that exchange, so REPPLIF is the one who claims it.
+            TryStartCapstoneExchange();
 
             double idleSec = IdleWatcher.GetIdleTime().TotalSeconds;
             if (idleSec >= idleThresholdSeconds && !idleCommented)
